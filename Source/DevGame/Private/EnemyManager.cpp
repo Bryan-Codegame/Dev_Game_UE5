@@ -4,7 +4,9 @@
 #include "EnemyManager.h"
 #include "EngineUtils.h"
 // Sets default values
-AEnemyManager::AEnemyManager()
+AEnemyManager::AEnemyManager() :
+	AccumulatedDeltaTime(0.0f), EnemySpawnTimeSeconds(3.5f),
+	MaxNumberOfEnemies(5), ReferencePlane(0)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -13,12 +15,33 @@ AEnemyManager::AEnemyManager()
 
 int AEnemyManager::GetNumberOfEnemies() const
 {
-	return 0;
+	int LivingEnemies = 0;
+	for(TActorIterator<AActor> ActorItr(GetWorld(), EnemyClass); ActorItr; ++ActorItr)
+	{
+		LivingEnemies++;
+	}
+	return LivingEnemies;
+}
+
+FVector AEnemyManager::GetRandomLocationFromReferencePlane() const
+{
+	FVector RandomLocation;
+	FVector Origin;
+	FVector BoundsExtend;
+
+	ReferencePlane->GetActorBounds(false, Origin, BoundsExtend);
+
+	RandomLocation = FMath::RandPointInBox(FBox::BuildAABB(Origin, BoundsExtend));
+
+	return RandomLocation;
 }
 
 
 void AEnemyManager::SpawnEnemy()
 {
+	FVector EnemySpawnLocation = GetRandomLocationFromReferencePlane();
+	GetWorld()->SpawnActor(EnemyClass, &EnemySpawnLocation);
+	
 }
 
 // Called when the game starts or when spawned
@@ -44,6 +67,13 @@ void AEnemyManager::BeginPlay()
 void AEnemyManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	AccumulatedDeltaTime += DeltaTime;
 
+	if((AccumulatedDeltaTime >= EnemySpawnTimeSeconds)
+		&& (GetNumberOfEnemies() < MaxNumberOfEnemies))
+	{
+		SpawnEnemy();
+		AccumulatedDeltaTime = 0.0f;
+	}
 }
 
