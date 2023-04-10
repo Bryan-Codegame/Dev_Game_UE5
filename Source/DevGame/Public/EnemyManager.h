@@ -20,7 +20,7 @@ private:
 	float EnemySpawnTimeSeconds;
 	int MaxNumberOfEnemies;
 
-	//TWeakObjectPtr<AActor> ReferencePlane;
+	TWeakObjectPtr<AActor> ReferencePlane;
 
 	int GetNumberOfEnemies() const;
 	FVector GetRandomLocationFromReferencePlane() const;
@@ -30,8 +30,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawner")
-	TWeakObjectPtr<AActor> ReferencePlane;
+	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawner")
+	TWeakObjectPtr<AActor> ReferencePlane;*/
 	
 public:	
 	// Called every frame
