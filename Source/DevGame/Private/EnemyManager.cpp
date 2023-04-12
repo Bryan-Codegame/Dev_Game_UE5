@@ -67,6 +67,7 @@ void AEnemyManager::BeginPlay()
 void AEnemyManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 	AccumulatedDeltaTime += DeltaTime;
 
 	if((AccumulatedDeltaTime >= EnemySpawnTimeSeconds)

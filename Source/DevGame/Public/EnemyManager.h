@@ -20,6 +20,7 @@ private:
 	float EnemySpawnTimeSeconds;
 	int MaxNumberOfEnemies;
 
+	//Invisible plane (static mesh actor) to spawn enemies
 	TWeakObjectPtr<AActor> ReferencePlane;
 
 	int GetNumberOfEnemies() const;
@@ -29,9 +30,6 @@ private:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
-	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawner")
-	TWeakObjectPtr<AActor> ReferencePlane;*/
 	
 public:	
 	// Called every frame
