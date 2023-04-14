@@ -20,9 +20,6 @@ private:
 	float EnemySpawnTimeSeconds;
 	int MaxNumberOfEnemies;
 
-	//Invisible plane (static mesh actor) to spawn enemies
-	TWeakObjectPtr<AActor> ReferencePlane;
-
 	int GetNumberOfEnemies() const;
 	FVector GetRandomLocationFromReferencePlane() const;
 	void SpawnEnemy();
@@ -35,6 +32,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	//Invisible plane (static mesh actor) to spawn enemies
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawner")
+	TWeakObjectPtr<AActor> ReferencePlane;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawner")
 	TSubclassOf<class AActor> EnemyClass;
 };

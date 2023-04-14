@@ -49,7 +49,7 @@ void AEnemyManager::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	const FString EnemySpawnPlaneString = FString(TEXT("EnemySpawnPlane"));
+	/*const FString EnemySpawnPlaneString = FString(TEXT("EnemySpawnPlane"));
 
 	//Search the EnemySpawnPlane in the world 
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
@@ -60,7 +60,7 @@ void AEnemyManager::BeginPlay()
 			ReferencePlane = *ActorItr;
 			break;
 		}
-	}
+	}*/
 }
 
 // Called every frame
