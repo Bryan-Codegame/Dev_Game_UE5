@@ -5,7 +5,7 @@
 #include "EngineUtils.h"
 // Sets default values
 AEnemyManager::AEnemyManager() :
-	AccumulatedDeltaTime(0.0f), EnemySpawnTimeSeconds(3.5f),
+	AccumulatedDeltaTime(0.0f), EnemySpawnTimeSeconds(3.0f),
 	MaxNumberOfEnemies(5), ReferencePlane(0)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -31,6 +31,7 @@ FVector AEnemyManager::GetRandomLocationFromReferencePlane() const
 
 	ReferencePlane->GetActorBounds(false, Origin, BoundsExtend);
 
+	//Generate a random location within the bounding box.
 	RandomLocation = FMath::RandPointInBox(FBox::BuildAABB(Origin, BoundsExtend));
 
 	return RandomLocation;
