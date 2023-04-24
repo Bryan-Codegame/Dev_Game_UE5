@@ -3,10 +3,14 @@
 
 #include "EnemyManager.h"
 #include "EngineUtils.h"
+#include "SlugEnemy.h"
+
 // Sets default values
 AEnemyManager::AEnemyManager() :
 	AccumulatedDeltaTime(0.0f), EnemySpawnTimeSeconds(3.0f),
-	MaxNumberOfEnemies(5), ReferencePlane(0)
+	MaxNumberOfEnemies(5), ReferencePlane(0),
+	EnemyClass(ASlugEnemy::StaticClass())
+	
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
