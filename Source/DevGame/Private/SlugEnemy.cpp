@@ -59,10 +59,12 @@ ASlugEnemy::ASlugEnemy() :
 	OnActorHit.AddDynamic(this, &ThisClass::OnHit);
 
 	//Set Projectile Class
-	auto FirstPersonProjectileBPClass = ConstructorHelpers::FClassFinder<AActor>(TEXT("/Game/Blueprints/FirstPersonProjectile"));
+	//TODO Create a BP Projectile class from c++ class and try with this part of code
+	//I will enable this part of code when I want to get a reference from some BP class created in editor 
+	/*auto FirstPersonProjectileBPClass = ConstructorHelpers::FClassFinder<AActor>(TEXT("/Game/Blueprints/FirstPersonProjectile"));
 	if (FirstPersonProjectileBPClass.Succeeded()) {
 		ProjectileClass = FirstPersonProjectileBPClass.Class;
-	}
+	}*/
 }
 
 
