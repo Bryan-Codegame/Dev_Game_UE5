@@ -9,6 +9,7 @@
 AEnemyManager::AEnemyManager() :
 	AccumulatedDeltaTime(0.0f), EnemySpawnTimeSeconds(3.0f),
 	MaxNumberOfEnemies(5), ReferencePlane(0),
+//Using ASlugEnemy without instantiate an object of it, I did it using StaticClass()
 	EnemyClass(ASlugEnemy::StaticClass())
 	
 {

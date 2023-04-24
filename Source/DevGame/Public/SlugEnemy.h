@@ -32,7 +32,7 @@ private:
 	// - https://wiki.unrealengine.com/UPROPERTY#Garbage_Collection
 	// It cannot be declared as a TSharedPtr; UPROPERTIES are smart pointers implicitly, and so they follow another life cycle
 
-	//We use UPROPERTY to free memory with the Garbage Collected
+	//We use UPROPERTY to free memory with the Garbage Collected and reference to the Unreal Editor
 	UPROPERTY()
 	TWeakObjectPtr<USkeletalMeshComponent> SkeletalMesh;
 	UPROPERTY()
