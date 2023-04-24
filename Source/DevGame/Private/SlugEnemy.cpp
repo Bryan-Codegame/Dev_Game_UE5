@@ -5,15 +5,16 @@
 
 #include "DevGame/DevGameProjectile.h"
 #include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystem.h"
+
 
 // Sets default values
 ASlugEnemy::ASlugEnemy() :
-	AccumulatedDeltaTime(0.0f),
-	ProjectileClass(ADevGameProjectile::StaticClass())
+	AccumulatedDeltaTime(0.0f)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
 	// Set the first component, i.e., the root node (it can be whatever component type)
 	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>("BaseMeshComponent");
 	auto MeshAsset = ConstructorHelpers::FObjectFinder<USkeletalMesh>(TEXT("SkeletalMesh'/Game/Models/Slug/Slug.Slug'"));
@@ -21,7 +22,7 @@ ASlugEnemy::ASlugEnemy() :
 	if (MeshAsset.Succeeded())
 	{
 		SkeletalMesh->SetSkeletalMesh(MeshAsset.Object);
-		SkeletalMesh->SetWorldScale3D(FVector(50.0f, 50.0f, 50.0f));
+		SkeletalMesh->SetWorldScale3D(FVector(1.0f, 1.0f, 1.0f));
 		SkeletalMesh->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
 	}
 
@@ -49,11 +50,11 @@ ASlugEnemy::ASlugEnemy() :
 
 	// Set the particle system to play on destroy
 	auto ParticleSystemAsset = ConstructorHelpers::FObjectFinder<UParticleSystem>(TEXT("ParticleSystem'/Game/Particles/P_Explosion.P_Explosion'"));
-	
 	if (ParticleSystemAsset.Succeeded())
 	{
 		ExplosionParticleSystem = ParticleSystemAsset.Object;
 	}
+	
 
 	// Set collision callback method for on hit events on actor from projectile blueprints
 	OnActorHit.AddDynamic(this, &ThisClass::OnHit);
@@ -61,10 +62,11 @@ ASlugEnemy::ASlugEnemy() :
 	//Set Projectile Class
 	//TODO Create a BP Projectile class from c++ class and try with this part of code
 	//I will enable this part of code when I want to get a reference from some BP class created in editor 
-	/*auto FirstPersonProjectileBPClass = ConstructorHelpers::FClassFinder<AActor>(TEXT("/Game/Blueprints/FirstPersonProjectile"));
+	auto FirstPersonProjectileBPClass = ConstructorHelpers::FClassFinder<AActor>(TEXT("/Game/FirstPerson/Blueprints/BP_FirstPersonProjectile"));
+	
 	if (FirstPersonProjectileBPClass.Succeeded()) {
 		ProjectileClass = FirstPersonProjectileBPClass.Class;
-	}*/
+	}
 }
 
 
