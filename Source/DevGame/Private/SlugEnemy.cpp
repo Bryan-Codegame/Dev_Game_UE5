@@ -87,6 +87,23 @@ void ASlugEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	AccumulatedDeltaTime += DeltaTime;
+
+	// Cache enemy location to use it later
+	FVector EnemyLocation = GetActorLocation();
+
+	// Rotate the enemy to face the player
+	FRotator EnemyRotation = FRotationMatrix::MakeFromX(PlayerPawn->GetActorLocation() - EnemyLocation).Rotator();
+	SkeletalMesh->SetRelativeRotation(EnemyRotation, false, nullptr, ETeleportType::TeleportPhysics);
+
+	// If fire interval has elapsed, spawn a new enemy projectile
+	FVector SpawnLocation = EnemyLocation + GetActorForwardVector() * 250.0f;
+	if (AccumulatedDeltaTime >= FireTimeInterval) {
+		GetWorld()->SpawnActor(ProjectileClass, &SpawnLocation, &EnemyRotation);
+
+		AccumulatedDeltaTime = 0.0f;
+	}
+
 }
 
 void ASlugEnemy::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit)
