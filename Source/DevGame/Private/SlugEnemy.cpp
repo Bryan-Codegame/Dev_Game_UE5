@@ -17,17 +17,17 @@ ASlugEnemy::ASlugEnemy() :
 	
 	// Set the first component, i.e., the root node (it can be whatever component type)
 	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>("BaseMeshComponent");
-	auto MeshAsset = ConstructorHelpers::FObjectFinder<USkeletalMesh>(TEXT("SkeletalMesh'/Game/Models/Slug/Slug.Slug'"));
+	auto MeshAsset = ConstructorHelpers::FObjectFinder<USkeletalMesh>(TEXT("SkeletalMesh'/Game/Models/Slug/SlugGoodOrientation/Slug.Slug'"));
 	
 	if (MeshAsset.Succeeded())
 	{
 		SkeletalMesh->SetSkeletalMesh(MeshAsset.Object);
 		SkeletalMesh->SetWorldScale3D(FVector(1.0f, 1.0f, 1.0f));
-		SkeletalMesh->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
+		//SkeletalMesh->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
 	}
 
 	// Set the physics asset, i.e., for collision shapes, gravity, etc
-	auto PhysicsAsset = ConstructorHelpers::FObjectFinder<UPhysicsAsset>(TEXT("PhysicsAsset'/Game/Models/Slug/Slug_PhysicsAsset.Slug_PhysicsAsset'"));
+	auto PhysicsAsset = ConstructorHelpers::FObjectFinder<UPhysicsAsset>(TEXT("PhysicsAsset'/Game/Models/Slug/SlugGoodOrientation/Slug_PhysicsAsset.Slug_PhysicsAsset'"));
 	
 	if (PhysicsAsset.Succeeded())
 	{
@@ -41,7 +41,7 @@ ASlugEnemy::ASlugEnemy() :
 	}
 
 	// Set the animation to play
-	auto AnimAsset = ConstructorHelpers::FObjectFinder<UAnimSequence>(TEXT("AnimSequence'/Game/Models/Slug/Slug_Anim_armature_Idle.Slug_Anim_armature_Idle'"));
+	auto AnimAsset = ConstructorHelpers::FObjectFinder<UAnimSequence>(TEXT("AnimSequence'/Game/Models/Slug/SlugGoodOrientation/Slug_Anim_armature_Idle.Slug_Anim_armature_Idle'"));
 	
 	if (AnimAsset.Succeeded())
 	{
@@ -96,12 +96,12 @@ void ASlugEnemy::Tick(float DeltaTime)
 
 	// Rotate the enemy to face the player
 	FRotator EnemyRotation = FRotationMatrix::MakeFromX(PlayerPawn->GetActorLocation() - EnemyLocation).Rotator()
-		 + FRotator(0,-90,0);
+		 + FRotator(0,0,0);
 
 	SkeletalMesh->SetRelativeRotation(EnemyRotation, false, nullptr, ETeleportType::TeleportPhysics);
 
 	// If fire interval has elapsed, spawn a new enemy projectile
-	FVector SpawnLocation = EnemyLocation + GetActorRightVector()*100;
+	FVector SpawnLocation = EnemyLocation + GetActorUpVector()*100;
 	if (AccumulatedDeltaTime >= FireTimeInterval) {
 		GetWorld()->SpawnActor(ProjectileClass, &SpawnLocation, &EnemyRotation);
 
