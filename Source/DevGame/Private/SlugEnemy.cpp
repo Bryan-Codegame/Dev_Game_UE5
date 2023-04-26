@@ -95,20 +95,13 @@ void ASlugEnemy::Tick(float DeltaTime)
 	FVector EnemyLocation = GetActorLocation();
 
 	// Rotate the enemy to face the player
-	FRotator EnemyRotation = FRotationMatrix::MakeFromX(PlayerPawn->GetActorLocation() - EnemyLocation).Rotator();
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(
-			-1,
-			10.f,
-			FColor::Green,
-			FString::Printf(TEXT("Enemy Rotation: %s"), *EnemyRotation.ToString())
-		);
-	}
-	SkeletalMesh->SetRelativeRotation(EnemyRotation + FRotator(0,-90,0), false, nullptr, ETeleportType::TeleportPhysics);
+	FRotator EnemyRotation = FRotationMatrix::MakeFromX(PlayerPawn->GetActorLocation() - EnemyLocation).Rotator()
+		 + FRotator(0,-90,0);
+
+	SkeletalMesh->SetRelativeRotation(EnemyRotation, false, nullptr, ETeleportType::TeleportPhysics);
 
 	// If fire interval has elapsed, spawn a new enemy projectile
-	FVector SpawnLocation = EnemyLocation + GetActorForwardVector() * 250.0f;
+	FVector SpawnLocation = EnemyLocation + GetActorRightVector()*100;
 	if (AccumulatedDeltaTime >= FireTimeInterval) {
 		GetWorld()->SpawnActor(ProjectileClass, &SpawnLocation, &EnemyRotation);
 
