@@ -94,13 +94,14 @@ void ASlugEnemy::Tick(float DeltaTime)
 	// Cache enemy location to use it later
 	FVector EnemyLocation = GetActorLocation();
 
+	//To get the correct orientation of Slug we have to import it with 90 degrees on axis Z.
 	// Rotate the enemy to face the player
-	FRotator EnemyRotation = FRotationMatrix::MakeFromX(PlayerPawn->GetActorLocation() - EnemyLocation).Rotator()
-		 + FRotator(0,0,0);
+	FRotator EnemyRotation = FRotationMatrix::MakeFromX(PlayerPawn->GetActorLocation() - EnemyLocation).Rotator();
 
 	SkeletalMesh->SetRelativeRotation(EnemyRotation, false, nullptr, ETeleportType::TeleportPhysics);
 
 	// If fire interval has elapsed, spawn a new enemy projectile
+	// + up offset
 	FVector SpawnLocation = EnemyLocation + GetActorUpVector()*100;
 	if (AccumulatedDeltaTime >= FireTimeInterval) {
 		GetWorld()->SpawnActor(ProjectileClass, &SpawnLocation, &EnemyRotation);
