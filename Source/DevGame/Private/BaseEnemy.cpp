@@ -6,7 +6,8 @@
 #include "Particles/ParticleSystem.h"
 
 // Sets default values
-ABaseEnemy::ABaseEnemy()
+ABaseEnemy::ABaseEnemy() :
+	AccumulatedDeltaTime(0.0f)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -70,7 +71,11 @@ ABaseEnemy::ABaseEnemy()
 void ABaseEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	// Play the default animation for the enemy
+	SkeletalMesh->PlayAnimation(IdleAnimation.Get(), true);
+
+	// Get a reference to the main player
+	PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 }
 
 // Called every frame
@@ -90,5 +95,15 @@ void ABaseEnemy::Tick(float DeltaTime)
 
 	RunBehaviour();
 
+}
+
+void ABaseEnemy::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit)
+{
+	if (OtherActor) {
+		if (OtherActor->IsA(ProjectileClass)) {
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticleSystem.Get(), Hit.Location);
+			Destroy();
+		}
+	}
 }
 
