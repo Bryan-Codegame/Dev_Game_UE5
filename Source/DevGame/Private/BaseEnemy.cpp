@@ -93,6 +93,7 @@ void ABaseEnemy::Tick(float DeltaTime)
 	FRotator EnemyRotation = FRotationMatrix::MakeFromX(PlayerPawn->GetActorLocation() - EnemyLocation).Rotator();
 	SkeletalMesh->SetRelativeRotation(EnemyRotation, false, nullptr, ETeleportType::TeleportPhysics);
 
+	//Run each behaviour of differents enemies.
 	RunBehaviour();
 
 }
