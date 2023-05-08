@@ -2,8 +2,6 @@
 
 
 #include "SuperShootingSlugEnemy.h"
-#include "Components/PrimitiveComponent.h"
-#include "Materials/MaterialInstanceDynamic.h"
 
 // Sets default values
 ASuperShootingSlugEnemy::ASuperShootingSlugEnemy() : Super()
