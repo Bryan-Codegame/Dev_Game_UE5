@@ -19,8 +19,9 @@ void AJumpingShootingSlugEnemy::RunBehaviour()
 	auto End = Start + (-1 * GetActorUpVector() * 10000.0f);
 	FCollisionQueryParams TraceParams;
 	TraceParams.AddIgnoredActor(this);
-	TraceParams.bTraceAsyncScene = true;
+	//TraceParams.bTraceAsyncScene = true;
 	TraceParams.bTraceComplex = true;
+
 	bool Hit = GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_WorldStatic, TraceParams);
 	if (Hit) {
 		// If it's on the ground, make it jumps
