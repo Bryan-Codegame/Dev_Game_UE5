@@ -2,6 +2,7 @@
 
 
 #include "SuperShootingSlugEnemy.h"
+#include "Components/PrimitiveComponent.h"
 
 // Sets default values
 ASuperShootingSlugEnemy::ASuperShootingSlugEnemy() : Super()
