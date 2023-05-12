@@ -16,7 +16,7 @@ void AJumpingShootingSlugEnemy::RunBehaviour()
 	float Offset = 70.0f;
 	FHitResult HitResult;
 	auto Start = GetActorLocation() + (GetActorUpVector() * Offset);  // The raycast has to start in the geometry origin of the actor
-	auto End = Start + (-1 * GetActorUpVector() * 10000.0f);
+	auto End = Start + (-1 * GetActorUpVector() * 100.0f);
 	FCollisionQueryParams TraceParams;
 	TraceParams.AddIgnoredActor(this);
 	//TraceParams.bTraceAsyncScene = true;
@@ -24,22 +24,33 @@ void AJumpingShootingSlugEnemy::RunBehaviour()
 
 	bool Hit = GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_WorldStatic, TraceParams);
 	if (Hit) {
+		
 		// If it's on the ground, make it jumps
 		if (HitResult.Distance <= Offset + 10.0f) {  // Add 10 units to be safe in case the actor fall into a slope
 			//SkeletalMesh->AddImpulse(GetActorUpVector() * SkeletalMesh->GetMass() * 1000.0f);
 		}
+		SkeletalMesh->AddImpulse(GetActorUpVector() * SkeletalMesh->GetMass() * 700.0f);
+		//Draw raycast on game
+		DrawDebugLine(GetWorld(), Start, End, FColor(255, 0, 0),false,
+			-1, 0, 9);
+	}
+	else
+	{
+		DrawDebugLine(GetWorld(), Start, End, FColor(255, 255, 0),false,
+			-1, 0, 9);
 	}
 
-	//Draw raycast on game
+	
 	DrawDebugLine(
 			GetWorld(),
 			Start,
-			End,
-			FColor(255, 0, 0),
+			Start - (GetActorUpVector()*(Offset+10.0f)),
+			FColor(0, 255, 0),
 			false, -1, 0,
-			9
-			
+			12
+		
 			);
+	
 
 	// If fire interval has elapsed, spawn a new enemy projectile
 	if (AccumulatedDeltaTime >= FireTimeInterval) {

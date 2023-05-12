@@ -22,6 +22,7 @@ private:
 
 	int GetNumberOfEnemies() const;
 	FVector GetRandomLocationFromReferencePlane() const;
+	TSubclassOf<ABaseEnemy> GetRandomEnemyClass() const;
 	void SpawnEnemy();
 	
 protected:

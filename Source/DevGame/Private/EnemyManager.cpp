@@ -5,6 +5,10 @@
 #include "EngineUtils.h"
 #include "SlugEnemy.h"
 
+#include "ShootingSlugEnemy.h"
+#include "JumpingShootingSlugEnemy.h"
+#include "SuperShootingSlugEnemy.h"
+
 // Sets default values
 AEnemyManager::AEnemyManager() :
 	AccumulatedDeltaTime(0.0f), EnemySpawnTimeSeconds(3.0f),
@@ -42,11 +46,18 @@ FVector AEnemyManager::GetRandomLocationFromReferencePlane() const
 	return RandomLocation;
 }
 
+TSubclassOf<ABaseEnemy> AEnemyManager::GetRandomEnemyClass() const
+{
+	/* TODO */
+	return nullptr;
+}
+
 
 void AEnemyManager::SpawnEnemy()
 {
+	TSubclassOf<ABaseEnemy> EnemyType = GetRandomEnemyClass();
 	FVector EnemySpawnLocation = GetRandomLocationFromReferencePlane();
-	GetWorld()->SpawnActor(EnemyClass, &EnemySpawnLocation);
+	GetWorld()->SpawnActor(EnemyType, &EnemySpawnLocation);
 	
 }
 
