@@ -26,9 +26,20 @@ void AJumpingShootingSlugEnemy::RunBehaviour()
 	if (Hit) {
 		// If it's on the ground, make it jumps
 		if (HitResult.Distance <= Offset + 10.0f) {  // Add 10 units to be safe in case the actor fall into a slope
-			SkeletalMesh->AddImpulse(GetActorUpVector() * SkeletalMesh->GetMass() * 1000.0f);
+			//SkeletalMesh->AddImpulse(GetActorUpVector() * SkeletalMesh->GetMass() * 1000.0f);
 		}
 	}
+
+	//Draw raycast on game
+	DrawDebugLine(
+			GetWorld(),
+			Start,
+			End,
+			FColor(255, 0, 0),
+			false, -1, 0,
+			9
+			
+			);
 
 	// If fire interval has elapsed, spawn a new enemy projectile
 	if (AccumulatedDeltaTime >= FireTimeInterval) {
