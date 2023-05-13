@@ -42,6 +42,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawner")
 	TWeakObjectPtr<AActor> ReferencePlane;
 	
-	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawner")
-	TSubclassOf<class AActor> EnemyClass;*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawner")
+	TSubclassOf<class AActor> EnemyClass;
 };
