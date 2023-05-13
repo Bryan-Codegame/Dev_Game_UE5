@@ -12,20 +12,21 @@
 // Sets default values
 AEnemyManager::AEnemyManager() :
 	AccumulatedDeltaTime(0.0f), EnemySpawnTimeSeconds(3.0f),
-	MaxNumberOfEnemies(5), ReferencePlane(0),
-//Using ASlugEnemy without instantiate an object of it, I did it using StaticClass()
-	EnemyClass(ASlugEnemy::StaticClass())
-	
+	MaxNumberOfEnemies(5), ReferencePlane(0)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	//Using ASlugEnemy without instantiate an object of it, I did it using StaticClass()
+	EnemyClasses.AddUnique(AShootingSlugEnemy::StaticClass());
+	EnemyClasses.AddUnique(AJumpingShootingSlugEnemy::StaticClass());
+	EnemyClasses.AddUnique(ASuperShootingSlugEnemy::StaticClass());
 }
 
 int AEnemyManager::GetNumberOfEnemies() const
 {
 	int LivingEnemies = 0;
-	for(TActorIterator<AActor> ActorItr(GetWorld(), EnemyClass); ActorItr; ++ActorItr)
+	for(TActorIterator<AActor> ActorItr(GetWorld(), ABaseEnemy::StaticClass()); ActorItr; ++ActorItr)
 	{
 		LivingEnemies++;
 	}
@@ -48,8 +49,7 @@ FVector AEnemyManager::GetRandomLocationFromReferencePlane() const
 
 TSubclassOf<ABaseEnemy> AEnemyManager::GetRandomEnemyClass() const
 {
-	/* TODO */
-	return nullptr;
+	return EnemyClasses[FMath::RandRange(0, EnemyClasses.Num()-1)];
 }
 
 

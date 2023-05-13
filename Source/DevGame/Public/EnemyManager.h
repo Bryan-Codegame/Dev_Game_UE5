@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "EnemyManager.generated.h"
 
+class ABaseEnemy;
+
 UCLASS()
 class DEVGAME_API AEnemyManager : public AActor
 {
@@ -25,6 +27,9 @@ private:
 	TSubclassOf<ABaseEnemy> GetRandomEnemyClass() const;
 	void SpawnEnemy();
 	
+	// Keeps a list of enemy types to spawn
+	TArray<TSubclassOf<ABaseEnemy>> EnemyClasses;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -37,6 +42,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawner")
 	TWeakObjectPtr<AActor> ReferencePlane;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawner")
-	TSubclassOf<class AActor> EnemyClass;
+	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawner")
+	TSubclassOf<class AActor> EnemyClass;*/
 };
